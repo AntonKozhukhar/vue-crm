@@ -9,9 +9,8 @@ import './registerServiceWorker'
 import 'materialize-css/dist/js/materialize.min'
 
 import firebase from 'firebase/app'
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import 'firebase/auth'
+import 'firebase/database'
 
 Vue.config.productionTip = false
 
@@ -20,30 +19,27 @@ Vue.use(messagePlugin)
 
 Vue.filter('date', dateFilter)
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB687D18wz-K_Z6IsFSDWFhUqHlb0Y7kCo",
-  authDomain: "vue-crm-ba4b8.firebaseapp.com",
-  projectId: "vue-crm-ba4b8",
-  storageBucket: "vue-crm-ba4b8.appspot.com",
-  messagingSenderId: "985072176672",
-  appId: "1:985072176672:web:ce03284d206744da093645",
-  measurementId: "G-238BZKWTT5"
-};
+firebase.initializeApp({
+  apiKey: 'AIzaSyBJvjFkxiFgu-IlYHk-eGPtb4DGRgSFPII',
+  authDomain: 'vue-crm-c24c2.firebaseapp.com',
+  projectId: 'vue-crm-c24c2',
+  storageBucket: 'vue-crm-c24c2.appspot.com',
+  messagingSenderId: '783660721256',
+  appId: '1:783660721256:web:6ff02cd5e3c2b297df87dd',
+  measurementId: 'G-EP85VZ9G70',
+})
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let app
 
-let appVue
-
-const auth = getAuth();
-onAuthStateChanged(auth, () => {
-  if (!appVue) {
-    appVue = new Vue({
+firebase.auth().onAuthStateChanged(() => {
+  if (!app) {
+    app = new Vue({
       router,
       store,
       render: h => h(App),
     }).$mount('#app')
   }
-});
+})
+
+
 

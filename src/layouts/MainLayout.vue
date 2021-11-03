@@ -25,6 +25,11 @@ import Sidebar from '../components/app/Sidebar'
 export default {
   name: 'main-layout',
   components: {Sidebar, Navbar},
+  mounted() {
+
+      this.$store.dispatch('fetchInfo')
+
+  },
   data() {
     return {
       isSidebarOpen: true,

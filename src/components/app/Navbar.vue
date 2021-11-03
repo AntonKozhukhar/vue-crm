@@ -42,7 +42,6 @@ export default {
     this.interval = setInterval(() => {
       this.date = new Date()
     }, 1000)
-
     this.dropdown = M.Dropdown.init(this.$refs.dropdown, {})
   },
 
@@ -52,8 +51,9 @@ export default {
   },
 
   methods: {
-    logout() {
-      this.$router.push('/login?message=logout')
+    async logout() {
+      await this.$store.dispatch('logout')
+      await this.$router.push('/login?message=logout')
     },
   },
 
