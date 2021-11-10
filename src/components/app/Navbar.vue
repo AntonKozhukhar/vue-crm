@@ -11,7 +11,7 @@
       <ul class='right hide-on-small-and-down'>
         <li>
           <a class='dropdown-trigger black-text' href='#' data-target='dropdown' ref='dropdown'>
-            USER NAME
+            {{ info.name }}
             <i class='material-icons right'>arrow_drop_down</i>
           </a>
 
@@ -23,7 +23,7 @@
             </li>
             <li class='divider' tabindex='-1'></li>
             <li>
-              <a href='#' class='black-text' @click.prevent='logout'>
+              <a href='#' class='black-text' @click.prevent='onLogout'>
                 <i class='material-icons'>assignment_return</i>Выйти
               </a>
             </li>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+
 export default {
   name: 'navbar',
 
@@ -45,14 +47,17 @@ export default {
     this.dropdown = M.Dropdown.init(this.$refs.dropdown, {})
   },
 
+  computed: mapGetters(['info']),
+
   beforeDestroy() {
     clearInterval(this.interval)
     if (this.dropdown && this.dropdown.destroy) this.dropdown.destroy
   },
 
   methods: {
-    async logout() {
-      await this.$store.dispatch('logout')
+    ...mapActions(['logout']),
+    async onLogout() {
+      await this.logout()
       await this.$router.push('/login?message=logout')
     },
   },
